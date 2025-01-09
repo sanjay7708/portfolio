@@ -23,27 +23,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cqe87@652u)&p*9ms8uqs41ntpdtk4&r!@82=_lvaf#4ww^-m#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+DEBUG = False
 
-ALLOWED_HOSTS = ["myportfolio.onrender.com"]
+ALLOWED_HOSTS = ["myportfolio.onrender.com"]  # Add your domain here
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',  # For serving static files in production
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'resume',
+    'resume',  # Your app
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # For serving static files in production
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'myportfolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,'templates'],
+        'DIRS': [BASE_DIR, 'templates'],  # Add the templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'myportfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://...')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Use SQLite database engine
+        'NAME': BASE_DIR / 'db.sqlite3',          # SQLite database file in the project root directory
+    }
 }
-
 
 
 # Password validation
@@ -119,11 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILE_DIRS=[
-    BASE_DIR,'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # The directory for your custom static files
 ]
-STATIC_ROOT=BASE_DIR/'staticfiles'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # The directory where static files will be collected in production
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
